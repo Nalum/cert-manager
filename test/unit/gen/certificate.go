@@ -17,9 +17,8 @@ limitations under the License.
 package gen
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
 	"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type CertificateModifier func(*v1alpha1.Certificate)
