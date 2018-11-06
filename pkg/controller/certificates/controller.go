@@ -39,6 +39,8 @@ import (
 type Controller struct {
 	*controllerpkg.Context
 
+	helper controllerpkg.Helper
+
 	// To allow injection for testing.
 	syncHandler func(ctx context.Context, key string) (bool, error)
 
@@ -86,6 +88,8 @@ func New(ctx *controllerpkg.Context) *Controller {
 	ordersInformer := ctrl.SharedInformerFactory.Certmanager().V1alpha1().Orders()
 	ordersInformer.Informer().AddEventHandler(&controllerpkg.BlockingEventHandler{WorkFunc: ctrl.handleOwnedResource})
 	ctrl.syncedFuncs = append(ctrl.syncedFuncs, ordersInformer.Informer().HasSynced)
+
+	ctrl.helper = controllerpkg.NewHelper(ctrl.issuerLister, ctrl.clusterIssuerLister)
 
 	return ctrl
 }
